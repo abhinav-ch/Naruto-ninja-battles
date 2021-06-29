@@ -8,21 +8,25 @@ screen = pygame.display.set_mode((700, 500))
 pygame.display.set_caption("Naruto ninja Battles")
 
 # creating arrays of walking images
-naruto_right = [pygame.image.load('assets\\run1.png'), pygame.image.load('assets\\run2.png'),
-                pygame.image.load('assets\\run3.png'), pygame.image.load('assets\\run4.png')]
-naruto_left = [pygame.image.load('assets\\l1.png'), pygame.image.load('assets\\l2.png'),
-               pygame.image.load('assets\\l3.png'), pygame.image.load('assets\\l4.png')]
+naruto_right = [pygame.image.load('assets/run1.png'),
+                pygame.image.load('assets/run2.png'),
+                pygame.image.load('assets/run3.png'),
+                pygame.image.load('assets/run4.png')]
+naruto_left = [pygame.image.load('assets/l1.png'),
+               pygame.image.load('assets/l2.png'),
+               pygame.image.load('assets/l3.png'),
+               pygame.image.load('assets/l4.png')]
 
-Mh = pygame.image.load('assets\\mhealth.png')
-Nh = pygame.image.load('assets\\nhealth.png')
+Mh = pygame.image.load('assets/mhealth.png')
+Nh = pygame.image.load('assets/nhealth.png')
 nh = pygame.transform.scale(Nh, (80, 80))
 mh = pygame.transform.scale(Mh, (80, 80))
-nd = pygame.transform.scale(pygame.image.load('assets\\nd.png'), (75, 45))
+nd = pygame.transform.scale(pygame.image.load('assets/nd.png'), (75, 45))
 
-hit = pygame.mixer.Sound("assets\\hit.wav")
-theme = pygame.mixer.music.load("assets\\theme.wav")
+hit = pygame.mixer.Sound("assets/hit.wav")
+theme = pygame.mixer.music.load("assets/theme.wav")
 
-pygame.mixer.music.play()
+pygame.mixer.music.play(-1)
 # creating a clock
 clock = pygame.time.Clock()
 
@@ -53,39 +57,51 @@ class player():
             if not (self.stand):
                 self.hitbox = (self.x, self.y + 5, 65, 70)
                 if self.left:
-                    screen.blit(naruto_left[self.walkcount // 4], (self.x, self.y + 8))
+                    screen.blit(naruto_left[self.walkcount / 4],
+                                (self.x, self.y + 8))
                     self.walkcount += 1
                 elif self.right:
-                    screen.blit(naruto_right[self.walkcount // 4], (self.x, self.y + 8))
+                    screen.blit(naruto_right[self.walkcount / 4],
+                                (self.x, self.y + 8))
                     self.walkcount += 1
             else:
                 if self.right:
-                    screen.blit(pygame.image.load('assets\\standing right.png'), (self.x, self.y))
+                    screen.blit(
+                        pygame.image.load('assets/standing right.png'),
+                        (self.x, self.y)
+                    )
                 else:
-                    screen.blit(pygame.image.load('assets\\standing left.png'), (self.x, self.y))
+                    screen.blit(
+                        pygame.image.load('assets/standing left.png'),
+                        (self.x, self.y)
+                    )
                 self.hitbox = (self.x, self.y + 5, 37, 70)
-            nabar_bg = pygame.draw.rect(screen, (0, 25, 255), (70, 40, 220, 30))
-            nbar2 = pygame.draw.rect(screen, (255, 0, 0), (80, 45, 200, 20))
-            nabar = pygame.draw.rect(screen, (25, 255, 0), (80, 45, self.health, 20))
+            nabar_bg = pygame.draw.rect(screen, (0, 25, 255),
+                                        (70, 40, 220, 30))
+            nbar2 = pygame.draw.rect(screen, (255, 0, 0),
+                                     (80, 45, 200, 20))
+            nabar = pygame.draw.rect(screen, (25, 255, 0),
+                                     (80, 45, self.health, 20))
         else:
             if over:
-                text = font.render('Madara wins.Click r to replay', True, (0, 30, 255), (0, 0, 100))
+                text = font.render('Madara wins.Click r to replay', True,
+                                   (0, 30, 255), (0, 0, 100))
                 screen.blit(text, (100, 200))
                 screen.blit(nd, (self.x, self.y + 40))
             else:
                 self.vel = 9
-                nabar_bg = pygame.draw.rect(screen, (0, 25, 255), (70, 40, 220, 30))
-                nbar2 = pygame.draw.rect(screen, (255, 0, 0), (80, 45, 200, 20))
-                nabar = pygame.draw.rect(screen, (25, 255, 0), (80, 45, self.health, 20))
+                nabar_bg = pygame.draw.rect(screen, (0, 25, 255),
+                                            (70, 40, 220, 30))
+                nbar2 = pygame.draw.rect(screen, (255, 0, 0),
+                                         (80, 45, 200, 20))
+                nabar = pygame.draw.rect(screen, (25, 255, 0),
+                                         (80, 45, self.health, 20))
 
         # pygame.draw.rect(screen,(0,0,255),self.hitbox,2)
 
     def hit(self):
         if self.health > 0:
             self.health -= 5
-            print('Naruto:' + str(self.health))
-        else:
-            print("naruto died")
 
 
 class Shuriken():
@@ -98,16 +114,20 @@ class Shuriken():
         self.vel = 8 * facing
 
     def draw(self, screen):
-        screen.blit(pygame.image.load('assets\\shuriken.png'), (self.x, self.y))
+        screen.blit(pygame.image.load('assets/shuriken.png'), (self.x, self.y))
         self.hitbox = (self.x, self.y, 40, 40)
         # pygame.draw.rect(screen,(0,0,255),self.hitbox,2)
 
 
 class enemy():
-    madara_right = [pygame.image.load('assets\\mr1.png'), pygame.image.load('assets\\mr2.png'),
-                    pygame.image.load('assets\\mr3.png'), pygame.image.load('assets\\mr4.png')]
-    madara_left = [pygame.image.load('assets\\ml1.png'), pygame.image.load('assets\\ml2.png'),
-                   pygame.image.load('assets\\ml3.png'), pygame.image.load('assets\\ml4.png')]
+    madara_right = [pygame.image.load('assets/mr1.png'),
+                    pygame.image.load('assets/mr2.png'),
+                    pygame.image.load('assets/mr3.png'),
+                    pygame.image.load('assets/mr4.png')]
+    madara_left = [pygame.image.load('assets/ml1.png'),
+                   pygame.image.load('assets/ml2.png'),
+                   pygame.image.load('assets/ml3.png'),
+                   pygame.image.load('assets/ml4.png')]
 
     def __init__(self, x, y, width, height, start, end):
         self.x = x
@@ -128,21 +148,27 @@ class enemy():
             if self.walkcount + 1 >= 12:
                 self.walkcount = 0
             if self.speed > 0:
-                screen.blit(self.madara_right[self.walkcount // 4], (self.x, self.y))
+                screen.blit(self.madara_right[int(self.walkcount / 4)],
+                            (self.x, self.y))
                 self.walkcount += 1
             else:
-                screen.blit(self.madara_left[self.walkcount // 4], (self.x, self.y))
+                screen.blit(self.madara_left[int(self.walkcount / 4)],
+                            (self.x, self.y))
                 self.walkcount += 1
             self.hitbox = (self.x, self.y, 60, 65)
-            mbar_bg = pygame.draw.rect(screen, (0, 25, 255), (400, 40, 220, 30))
+            mbar_bg = pygame.draw.rect(screen, (0, 25, 255),
+                                       (400, 40, 220, 30))
             mbar2 = pygame.draw.rect(screen, (255, 0, 0), (410, 45, 200, 20))
-            mabar = pygame.draw.rect(screen, (25, 255, 0), (410, 45, self.health, 20))
+            mabar = pygame.draw.rect(screen, (25, 255, 0),
+                                     (410, 45, self.health, 20))
         else:
             if over:
                 self.speed = 0
-                text = font.render('Naruto wins. Click R to replay', True, (0, 30, 255), (0, 0, 100))
+                text = font.render('Naruto wins. Click R to replay', True,
+                                   (0, 30, 255), (0, 0, 100))
                 screen.blit(text, (100, 200))
-                screen.blit(pygame.image.load('assets\\md4.png'), (self.x, self.y + 20))
+                screen.blit(pygame.image.load('assets/md4.png'),
+                            (self.x, self.y + 20))
         # pygame.draw.rect(screen,(0,0,255),self.hitbox,2)
 
     def move(self):
@@ -163,9 +189,6 @@ class enemy():
     def hit(self):
         if self.health > 0:
             self.health -= 10
-            print('madara:' + str(self.health))
-        else:
-            print("madara died")
 
 
 run = True
@@ -176,7 +199,7 @@ def redraw_window():
     screen.fill((153, 217, 234))
     screen.fill((51, 189, 13), rect=[0, 500 - 40, 700, 40])
     screen.fill((128, 94, 0), rect=[0, 500 - 25, 700, 25])
-    screen.blit(pygame.image.load('assets\\bg.png'), (0, 0))
+    screen.blit(pygame.image.load('assets/bg.png'), (0, 0))
     naruto.draw(screen)
     madara.draw(screen)
     screen.blit(nh, (10, 10))
@@ -210,10 +233,10 @@ while run:
             run = False
 
     if naruto.health > 0 and madara.health > 0:
-        if naruto.hitbox[1] < madara.hitbox[1] + madara.hitbox[3] and naruto.hitbox[1] + naruto.hitbox[3] > \
-                madara.hitbox[1]:
-            if naruto.hitbox[0] + naruto.hitbox[2] > madara.hitbox[0] and naruto.hitbox[0] < madara.hitbox[0] + \
-                    madara.hitbox[2]:
+        if naruto.hitbox[1] < madara.hitbox[1] + madara.hitbox[3] and \
+           naruto.hitbox[1] + naruto.hitbox[3] > madara.hitbox[1]:
+            if naruto.hitbox[0] + naruto.hitbox[2] > madara.hitbox[0] and \
+               naruto.hitbox[0] < madara.hitbox[0] + madara.hitbox[2]:
                 naruto.hit()
                 hit.play()
     else:
@@ -224,10 +247,10 @@ while run:
 
     for shuriken in shurikens:
         if madara.health > 0:
-            if shuriken.hitbox[1] + round(shuriken.hitbox[3] / 2) > madara.hitbox[1] and shuriken.hitbox[1] + round(
-                    shuriken.hitbox[3] / 2) < madara.hitbox[1] + madara.hitbox[3]:
-                if shuriken.hitbox[0] + shuriken.hitbox[2] > madara.hitbox[0] and shuriken.hitbox[0] + shuriken.hitbox[
-                    2] < madara.hitbox[0] + madara.hitbox[2]:
+            if shuriken.hitbox[1] + round(shuriken.hitbox[3] / 2) > madara.hitbox[1] and \
+               shuriken.hitbox[1] + round(shuriken.hitbox[3] / 2) < madara.hitbox[1] + madara.hitbox[3]:
+                if shuriken.hitbox[0] + shuriken.hitbox[2] > madara.hitbox[0] and \
+                   shuriken.hitbox[0] + shuriken.hitbox[2] < madara.hitbox[0] + madara.hitbox[2]:
                     madara.hit()
                     hit.play()
                     shurikens.pop(shurikens.index(shuriken))
@@ -251,7 +274,9 @@ while run:
 
         if len(shurikens) < 5:
             shurikens.append(
-                Shuriken(round(naruto.x + naruto.width // 2), (naruto.y + naruto.height // 2), 40, 40, facing))
+                Shuriken(round(naruto.x + naruto.width / 2),
+                         (naruto.y + naruto.height / 2), 40, 40, facing)
+            )
         throwspeed = 1
 
     if keys[pygame.K_LEFT] and naruto.x > naruto.vel:
