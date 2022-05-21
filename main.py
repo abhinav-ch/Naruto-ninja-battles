@@ -57,11 +57,11 @@ class player():
             if not (self.stand):
                 self.hitbox = (self.x, self.y + 5, 65, 70)
                 if self.left:
-                    screen.blit(naruto_left[self.walkcount / 4],
+                    screen.blit(naruto_left[self.walkcount // 4],
                                 (self.x, self.y + 8))
                     self.walkcount += 1
                 elif self.right:
-                    screen.blit(naruto_right[self.walkcount / 4],
+                    screen.blit(naruto_right[self.walkcount // 4],
                                 (self.x, self.y + 8))
                     self.walkcount += 1
             else:
